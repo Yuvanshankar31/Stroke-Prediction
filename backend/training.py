@@ -24,14 +24,14 @@ def evaluate_model(X, y, model):
     scores = cross_val_score(model, X, y, scoring='roc_auc', cv=cv, n_jobs=-1)
     return scores
 
-# Load data
+
 X, y, categorical, numerical = load_data()
 print(X.shape, y.shape)
 
-# Define the LDA model
+
 model = LinearDiscriminantAnalysis()
 
-# Prepare the pipeline
+
 transformer = ColumnTransformer(transformers=[
     ('imp', SimpleImputer(strategy='median'), numerical),
     ('o', OneHotEncoder(handle_unknown='ignore'), categorical)  # handle_unknown='ignore' to manage unseen categories
@@ -44,16 +44,15 @@ pipeline = Pipeline(steps=[
     ('m', model)
 ])
 
-# Evaluate the model
-scores = evaluate_model(X, y, pipeline)
-# print('LDA %.3f (%.3f)' % (np.mean(scores), np.std(scores)))
 
-# Plot the results
+scores = evaluate_model(X, y, pipeline)
+
+
+
 plt.boxplot([scores], labels=['LDA'], showmeans=True)
 plt.show()
 
-# Fit the pipeline on the entire dataset
+
 pipeline.fit(X, y)
 
-# Save the trained pipeline
 dump(pipeline, 'stroke_prediction_model.joblib')
