@@ -11,7 +11,10 @@ from joblib import dump
 import matplotlib.pyplot as plt
 
 def load_data():
-    df = pd.read_csv('D:/flask-react-app/stroke-data.csv')
+    import os
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    csv_path = os.path.join(base_dir, 'stroke-data.csv')
+    df = pd.read_csv(csv_path)
     df = df.drop('id', axis=1)
     categorical = ['hypertension', 'heart_disease', 'ever_married', 'work_type', 'Residence_type', 'smoking_status']
     numerical = ['avg_glucose_level', 'bmi', 'age']
@@ -55,4 +58,7 @@ plt.show()
 
 pipeline.fit(X, y)
 
-dump(pipeline, 'stroke_prediction_model.joblib')
+import os
+script_dir = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(script_dir, 'stroke_prediction_model.joblib')
+dump(pipeline, model_path)

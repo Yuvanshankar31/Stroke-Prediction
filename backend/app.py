@@ -4,7 +4,10 @@ from joblib import load
 from flask_cors import CORS
 
 # Load the trained model
-model = load('./stroke_prediction_model.joblib')
+import os
+backend_dir = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(backend_dir, 'stroke_prediction_model.joblib')
+model = load(model_path)
 
 #initialize the flask app
 app = Flask(__name__)
