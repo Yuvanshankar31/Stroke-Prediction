@@ -50,12 +50,6 @@ pipeline = Pipeline(steps=[
 
 scores = evaluate_model(X, y, pipeline)
 
-
-
-plt.boxplot([scores], labels=['LDA'], showmeans=True)
-plt.show()
-
-
 pipeline.fit(X, y)
 
 import os
